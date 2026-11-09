@@ -24,7 +24,13 @@ Do both steps, in order.
 
 ### Step 1: Connect your agent to your Breakdance site
 
-Add your site's Breakdance MCP server to your agent. Start a new session when you're done, because agents only load MCP servers when a session starts.
+Follow Breakdance's own guide: [Connect Your AI Agent](https://breakdance.com/documentation/getting-started/connect-your-ai-agent/). In short:
+
+1. In WordPress, go to **Breakdance > Settings > Agents & MCP**. Install or activate **Agent Connector**.
+2. Click **Connect**, pick your agent in the wizard, and follow its steps.
+3. If your agent can't reach Breakdance, go back to **Breakdance > Settings > Agents & MCP**. Turn on **Enable MCP Access** (allow agents to access this site over MCP), and click **Save Changes**.
+
+Start a new session when you're done, because agents only load MCP servers when a session starts.
 
 To check it worked, ask the agent: "List the Breakdance tools you can use." You should see tools such as `get-post-tree`, `edit-post` and `preview-post`.
 
