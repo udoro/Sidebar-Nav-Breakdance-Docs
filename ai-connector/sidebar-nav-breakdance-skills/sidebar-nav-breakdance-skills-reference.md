@@ -4,14 +4,14 @@ icon: sparkles
 
 # AI Skills Reference Tables
 
-Sidebar Navigation Builder for Breakdance, version 3.0.3. Grep the section you need. Never read this file in full.
+Sidebar Navigation Builder for Breakdance, version 3.1. Grep the section you need. Never read this file in full.
 
 Customer docs: https://design-with-cracka.gitbook.io/sidebarnavbreakdance
 
 ## 1. Fingerprint
 
-* Root element: `Section`, tag `header`, id `dwc_header`, classes `dwc-sidebar` and `dwc-offcanvas-header`. Label `Sidebar  <header> v3.0.2` (the label is older than the code).
-* The Code Block: label `Sidebar Nav Codes`, the last child of the root. Its `javascript_code` starts with `const DWCSidebarConfig = {` and holds the options, `urlConfigMap` and the engine (`class DWCSidebarNavigation`). Its `css_code` starts with the `:root` variables. About 84 KB of JS and 53 KB of CSS. Its last JS line logs `<Sidebar Nav Builder v3.0.2>`.
+* Root element: `Section`, tag `header`, id `dwc_header`, classes `dwc-sidebar` and `dwc-offcanvas-header`. Label `Sidebar  <header> v3.1`.
+* The Code Block: label `Sidebar Nav Codes`, a child of the root; identify it by `const DWCSidebarConfig` in its `javascript_code`. Its `javascript_code` starts with `const DWCSidebarConfig = {` and holds the options, `urlConfigMap` and the engine (`class DWCSidebarNavigation`). Its `css_code` starts with the `:root` variables. About 84 KB of JS and 53 KB of CSS. Its last JS line logs `<Sidebar Nav Builder v3.1>`.
 * Element types stored in the template: `Section`, `Div`, `WrapperLink`, `Text`, `Icon`, `Heading`, `HtmlImg`, `Button`, `CodeBlock`. Most of these are not in `breakdance-get-element-slugs`.
 * On the published page the JS runs inside a `DOMContentLoaded` function inside a `<script>`. The CSS comes from a generated stylesheet.
 
@@ -23,7 +23,7 @@ Labels are the template's. Users can rename them: match by class first.
 
 | Label | Type | Tag | Classes | Attributes | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Sidebar  <header> v3.0.2 | Section | `header` | `dwc-sidebar`, `dwc-offcanvas-header` | section 4 | Root. id `dwc_header`. |
+| Sidebar  <header> v3.1 | Section | `header` | `dwc-sidebar`, `dwc-offcanvas-header` | section 4 | Root. id `dwc_header`. |
 | header inner wrap | Div | | `dwc-header-inner-wrap` | | Top of the sidebar; the top bar with `enableTopBar` or `enableOffCanvas`. Children: Logo wrapper, trigger wrapper, Collapse toggle. |
 | Logo wrapper | Div | | `dwc-sidebar__logo-wrapper` | | Child: WrapperLink (`aria-label` is the site title) > HtmlImg. |
 | trigger wrapper | Div | | `push-fixed` | | Child: mobile menu trigger. |
@@ -39,14 +39,14 @@ Labels are the template's. Users can rename them: match by class first.
 | Back button | Div | | `dwc-sidebar__nav__btn`, `dwc-nav__back-btn` | `role`, `tabindex` | Children: chevron-left Icon, Text `dwc-nav__back__text`. |
 | Panel title wrap | Div | | `dwc-nav__panel__title-wrap` | | Child Heading: `dwc-nav__panel__title`. |
 | List <ul> | Div | `ul` | `dwc-sidebar__nav__ul` | | |
-| li - link | Div | `li` | `dwc-sidebar__nav__li` | | Child WrapperLink `dwc-sidebar__nav__link` > Icon `dwc-nav__link__icon` + Text `dwc-nav__link__text`. |
+| li - link | Div | `li` | `dwc-sidebar__nav__li` | | Child WrapperLink `dwc-sidebar__nav__link` > Icon `dwc-nav__link__icon` + Text `dwc-nav__link__text`. The first item in the template's Slide Panel also holds a demo image (`dwc-sidebar__nav__list-img`). On a rebuild, remove it unless the user wants item images. |
 | li -  slide button | Div | `li` | `dwc-sidebar__nav__li` | | Child `slide button` (Div, `dwc-sidebar__nav__btn`, attributes `role`, `tabindex`, `data-title`) > Icon, Text, chevron Icon `dwc-nav__link__icon--chevron-right`. |
 | li -  dropdwon | Div | `li` | `dwc-sidebar__nav__li`, `dwc-sidebar__dropdown` | | Children: `dropdown toggle` (`dwc-sidebar__dropdown-toggle`) > Icon, Text, `button` > chevron; `dropdown content` (`dwc-sidebar__dropdown-content`) > List <ul> > li items. |
 | panel footer | Div | | `dwc-sidebar__nav__panel-footer` | | Social wrapper (`dwc-social-wrapper`) with three WrapperLinks (`dwc-social`), and a Button (`dwc-hide`, `dwc-fade`). |
 | mobile menu overaly | Div | | `dwc-mobile-menu-overlay` | `tabindex` `0` | |
 | Sidebar Nav Codes | CodeBlock | | | | The one Code Block you edit. |
 
-Property paths: link `content.content.link` (`{type, url}`); Text and Heading `content.content.text`; Icon `content.content.icon`; Button `content.content.text`; HtmlImg `content.content.attributes.src`; Code Block `content.content.javascript_code` and `content.content.css_code`; attributes and classes `settings.advanced.attributes` (`[{name, value}]`) and `settings.advanced.classes`.
+Property paths: link `content.content.link` (`{type, url}`); Text and Heading `content.content.text`; Icon `content.content.icon`; Button `content.content.text`; HtmlImg `content.content.attributes.src`; Code Block `content.content.javascript_code` and `content.content.css_code`; attributes and classes `settings.advanced.attributes` (`[{name, value}]`) and `settings.advanced.classes`; element label `meta.friendlyName`.
 
 ## 3. JS options
 
@@ -57,7 +57,7 @@ Property paths: link `content.content.link` (`{type, url}`); Text and Heading `c
 | `mq` | `window.matchMedia("(max-width: 1024px)")` | Change with three CSS media queries and the JS value (build file, "Change the breakpoint") | Mobile breakpoint. |
 | `offCanvasBreakpoint` | `window.matchMedia("(max-width:10024px)")` |  | Off-canvas applies at this width and below: every screen by default. |
 | `enableRTL` | `0` |  | Sets `dir="rtl"` on `<html>`. The sidebar moves to the right and the whole page turns right to left. |
-| `calcHeaderHeight` | `1` | Nothing reads it | No effect in 3.0.3. |
+| `calcHeaderHeight` | `1` | Nothing reads it | No effect. |
 | `updateBackText` | `1` |  | Back button text becomes `back to <data-title of the target panel>`. The words "back to" are fixed in the code. |
 | `autoCurrentPosition` | `1` | Skipped while collapsed | Slides to the panel holding the current page's link. A current link in a dropdown opens its dropdown. |
 | `offsetHashLinkScroll` | `0` |  | Clicking a `#hash` link scrolls to its target minus the header inner wrap height. |
@@ -76,7 +76,7 @@ Property paths: link `content.content.link` (`{type, url}`); Text and Heading `c
 | `saveCollapseState` | `1` | `enableCollapsibleSidebar: 1` | Saves the state in `localStorage` key `sidebarCollapsed`. |
 | `hoverToExpandSidebar` | `0` | `enableCollapsibleSidebar: 1` | Expands on hover while collapsed, collapses on mouse leave. |
 | `collapseAutoWidth` | `1` |  | Collapsed width from `--sidebar-panel-inline-padding`, `--sidebar-link-inline-padding` and `--sidebar-link-icon-size`. `0` uses `--sidebar-collapse-width`. Adds `dwc-auto-width`. |
-| `enableTooltips` | `1` |  | Sets `data-tooltip` (the item's text) on links, buttons, dropdown toggles and social links. Shown while collapsed. |
+| `enableTooltips` | `1` |  | Sets `data-tooltip` (the item's text) on links, buttons, dropdown toggles and social links. Shown while collapsed. Never visible with `hoverToExpandSidebar: 1`. |
 | `debugTooltips` | `0` |  | Logs each tooltip to the console. |
 | `enableHeadroom` | `1` | `enableOffCanvas` or `enableTopBar`, and not `offCanvasPushContent` | Header hides on scroll down past 200px and returns on scroll up. Adds `dwc-headroom`, `scroll-down`, `scroll-up`. |
 | `reinitOnUrlChange` | `true` |  | Restarts the sidebar when the page address changes without a full load. `true`/`false`. |
@@ -105,12 +105,13 @@ On the root section (`settings.advanced.attributes`):
 | `data-disable-animation` | empty | `"1"`: transitions in the sidebar, `main` and sections are `0s`. |
 | `data-disable-motion-on-load` | empty | `"1"`: same as above until the code removes the attribute 300 ms after load. |
 | `data-collapse` | empty | `"1"`: the sidebar is held at the collapsed width until the code removes the attribute 300 ms after load. |
+| `data-partition-dropdown` | empty | `"true"`: split dropdowns. The chevron is its own box at the row's end; only the box opens the dropdown. See the build file, "Split dropdowns". |
 
 On the Collapse toggle: `data-static` (`"true"`): the button stays inside the header inner wrap instead of floating at the sidebar edge.
 
 ## 5. CSS variables
 
-In the first `:root` rule of the Code Block's `css_code`. Existing variables only. Three of them do nothing in 3.0.3: `--sidebar-tooltip-font-color` (tooltip text is always white), `--lvl-1-toggle-color-active` and `--lvl-1-icon-hover-color`.
+In the first `:root` rule of the Code Block's `css_code`. Existing variables only. Limits: `--sidebar-panel-label-color` shows in the builder only. `--sidebar-chevron-color` colors slide-button chevrons; dropdown chevrons take `--lvl-1-icon-color`. `--sidebar-link-border-radius` doesn't round the dropdown toggle or the dropdown list. `--sidebar-link-transition` doesn't animate the main links. `--sidebar-close-btn-color` shows only with off-canvas; the mobile X is `--sidebar-hamburger-color`.
 
 | Variable | Template value |
 | --- | --- |
@@ -143,6 +144,11 @@ In the first `:root` rule of the Code Block's `css_code`. Existing variables onl
 | `--sidebar-dropdown-link-hover-color` | `black` |
 | `--sidebar-dropdown-links-hover-bg` | `rgb(0 0 0 / 8%)` |
 | `--sidebar-dropdown-links-indent` | `15px` |
+| `--sidebar-dropdown-button-bg` | `white` |
+| `--sidebar-dropdown-button-hover-bg` | `black` |
+| `--sidebar-dropdown-button-active-bg` | `black` |
+| `--sidebar-dropdown-chevron-hover-color` | `white` |
+| `--sidebar-dropdown-chevron-active-color` | `white` |
 | `--sidebar-list-items-block-padding` | `1.25rem` |
 | `--sidebar-list-gap` | `0` |
 | `--sidebar-chevron-size` | `1rem` |

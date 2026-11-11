@@ -15,9 +15,9 @@ The entry file sent you here because you are on the **build path**. Read this fi
 
 ### 1. Before you start
 
-**Session type.** Search upward from this file's folder for `SIDEBAR NAV BREAKDANCE/sidebar-nav-dev-context.md`, checking each ancestor in turn. Found: **developer session**, read it silently. Not found: **user session**.
+**Session type.** Search upward from this file's folder for `BREAKDANCE/SIDEBAR NAV BREAKDANCE/sidebar-nav-dev-context.md`, checking each ancestor in turn. Found: **developer session**, read it silently. Not found: **user session**.
 
-**User session only.** Look for `sidebar-nav-breakdance-user-context.md` in this file's folder. If it exists, read it silently. If not, create it with the structure below and tell the user you created it.
+**User session only.** Look for `sidebar-nav-breakdance-user-context.md` in this file's folder. If it exists, read it silently. If not, don't create it now: at the end, propose its first content with your other findings (the entry file's "Ask before you write" applies). Use the structure below.
 
 ```md
 # Sidebar Nav Breakdance User Context
@@ -34,7 +34,7 @@ The entry file sent you here because you are on the **build path**. Read this fi
 
 At the end of a user session, propose additions to it (the entry file's "Ask before you write" applies). A saved preference in the active context file wins over a default in this file. When you apply one, tell the user.
 
-**Working directory.** Make a working subdirectory for this task and keep every scratch file in it (tree snapshots, code fields, scripts). Delete it at the end, except any backup you were told to keep. Use `node` for scripting and parsing. Never `python` or `jq`. Write any script that contains a backslash (a regular expression, for example) with your file-writing tool, not with a shell heredoc or `node -e`: shells strip the backslashes and the script then runs wrongly without an error.
+**Working directory.** Make a working subdirectory for this task and keep every scratch file in it (tree snapshots, code fields, scripts). Delete it at the end, except the restore-point files from section 3. Use `node` for scripting and parsing. Never `python` or `jq`. Write any script that contains a backslash (a regular expression, for example) with your file-writing tool, not with a shell heredoc or `node -e`: shells strip the backslashes and the script then runs wrongly without an error.
 
 **Timestamp.** Run `date +%s` before you start work and save the value in your working directory.
 
@@ -52,8 +52,10 @@ Follow "Is the site connected" and "Find the header" in the entry file.
 **Probe the write path** before the first real write of the session. The sidebar's elements are older element types than the ones `breakdance-get-element-slugs` lists, so a write can be refused.
 
 1. Read one value you will change anyway.
-2. Send `breakdance-edit-post` with an `update` operation that sets that same value.
+2. Send `breakdance-edit-post` with an `update` operation that sets that same value. The cheapest value: the Code Block's `meta.friendlyName`, set to what it is now.
 3. Read the tree back and compare.
+
+A row's `"value_dynamic_meta": null` that disappears after an attribute write is not a change.
 
 Accepted and unchanged: carry on. Refused, or something else changed: stop writing. Give the user the builder steps for the whole task (section 5 lists them) and say why.
 
@@ -69,6 +71,8 @@ Before any write that changes structure or look, ask the user in **one** questio
 
 **Before option (b):** save the current `javascript_code`, `css_code` and the tree to your working directory, and tell the user those files are the restore point. Do not remove anything until the user confirms.
 
+If the brief already says to remove items, list them in chat before the write. Don't ask again.
+
 To undo, give the user the old value from your saved file and the builder steps to put it back. Never replace the whole header.
 
 ### 4. Order of tools
@@ -78,7 +82,7 @@ Use the first tier that can do the job. Name the tier in chat before each write.
 1. **JS option** in the Code Block. Reference section 3.
 2. **CSS variable** in the Code Block. Reference section 5.
 3. **Attribute** on the root section or Collapse toggle. Reference section 4.
-4. **Element settings**, for menu items and content you build.
+4. **Element settings**, for menu items (text, link, icon, `data-title`) and content you build.
 5. **Custom CSS**, only when nothing above covers it. Say in chat which option, variable or attribute you checked and why it does not cover the request.
 
 ***
@@ -131,15 +135,20 @@ In the element's `settings.advanced.attributes` array, change the `value` of the
 * Text: the Text element with `dwc-nav__link__text`: `content.content.text`.
 * Icon: the Icon element with `dwc-nav__link__icon`: `content.content.icon`.
 * Panel title: the Heading with `dwc-nav__panel__title`: `content.content.text`.
+* Link wrappers also hold a `content.content.url` key from the template. It doesn't render. Change `link` only.
+* Button: text `content.content.text`, link `content.content.link` (`{ "type": "url", "url": "..." }`). The template's button has no link until you set one.
+* Social link: link wrapper `dwc-social`, holding Icon `dwc-social__icon` and Text `dwc-social__text`.
+* Icon: set `content.content.icon` to `{ "id": 0, "slug": "custom", "name": "<name>", "iconSetSlug": "custom", "svgCode": "<svg …>" }`. The template colors icons with CSS `fill`, so use icons drawn as filled shapes with `fill="currentColor"`. The template's icons are Phosphor Icons, regular weight (MIT, phosphoricons.com): use that set unless the user wants another. To add an icon where there is none, `duplicate` a link icon and `move` it into the link wrapper at position 0.
 
 Copy the value shape from an existing element of the same kind in the tree.
 
 ### Add a menu item
 
+0. On a rebuild, rename and relink the template's existing items first. Duplicate only for extra items, and delete what is left over.
 1. Pick an existing item of the same kind (reference section 2).
 2. `duplicate` it with `breakdance-edit-post`. The copy gets new IDs and sits right after the original.
 3. Read the tree and find the copy. Change its text and link, and for a slide button its `data-title`.
-4. `move` it to the position the user wants, under the target **List &lt;ul&gt;**.
+4. `move` it to the position the user wants, under the target **List &lt;ul&gt;**. When you `move` within one list, move to a lower index, or to the end with no `position`.
 
 Do not `insert` the sidebar's element types: the server refuses them.
 
@@ -148,7 +157,7 @@ Do not `insert` the sidebar's element types: the server refuses them.
 ### Add a slide panel
 
 1. `duplicate` an existing **Slide Panel**, then `move` the copy directly under **Nav**. Never inside another panel. Keep `dwc-slide-right` in its classes.
-2. Set its `data-title` to a readable, unique name. Visitors see it as "back to <name>".
+2. Set its `data-title`, and the `title` attribute on its Home button, to a readable, unique name. Visitors see it as "back to <name>".
 3. Set its panel title Heading `text`, and build its list from duplicated items.
 4. Duplicate an **li - slide button** where the user wants it. Set the inner slide button's `data-title` to the panel's name, exactly.
 
@@ -157,6 +166,23 @@ A panel's depth comes from the slide button that opens it. Every panel stays a d
 ### Add a dropdown inside a dropdown
 
 `duplicate` an **li - dropdwon**, then `move` the copy into another dropdown's **dropdown content > List &lt;ul&gt;**. Level classes and level variables (`--lvl-2-*`, `--lvl-3-*`) apply on their own.
+
+### Split dropdowns
+
+Set the root section's `data-partition-dropdown` attribute to `"true"` (Change an attribute). The chevron's `[role="button"]` becomes a box at the end of each dropdown row, and only the box opens the dropdown. Colors: `--sidebar-dropdown-button-bg`, `-hover-bg`, `-active-bg`, `--sidebar-dropdown-chevron-hover-color`, `-active-color`. The divider is `--sidebar-link-underline`: with `none` there is no divider. While the sidebar is collapsed, a click on the row opens the dropdown; with `hoverToExpandSidebar: 1` the sidebar expands on hover first, so mouse users get the split row.
+
+### Make a dropdown label a link
+
+Split dropdowns only: without them the button covers the row and the link can't be clicked.
+
+1. `duplicate` the link wrapper (`dwc-sidebar__nav__link`) of any **li - link**.
+2. `move` the copy into the dropdown's **dropdown toggle** at position 0.
+3. `delete` the toggle's own Icon and Text. Keep the `[role="button"]` element and its chevron.
+4. Set the copy's `link`, Text and Icon.
+
+### Designed content in a panel
+
+Call `breakdance-html-to-page` with `parent_id` set to the panel's inner wrap (`dwc-nav__panel__inner`), below its title and list. Send no `<style>` block: put the CSS in your own Code Block (Your own CSS). Panels scroll inside the inner wrap. Test the content at the panel's width (`--sidebar-width`) on desktop and mobile.
 
 ### Remove a menu element
 
@@ -177,7 +203,7 @@ Never raise the breakpoint to get the menu button on desktop: set `enableOffCanv
 
 ### Your own CSS
 
-* Put it outside the Code Block, in a new Code Block placed below it in the header, or in the site's custom CSS, so a template update does not remove it. Ask the user which.
+* Put it outside the template's Code Block, so a template update does not remove it: in a Code Block of your own below it in the header, or in the site's custom CSS. Ask the user which. `insert` refuses a Code Block: `duplicate` the template's Code Block, then in the same `edit-post` call `update` the copy (its ID is the tree's `_nextNodeId`) with your `css_code`, `javascript_code` `""`, `php_code` `""` and a new `meta.friendlyName`. If the ID is wrong, the whole call fails and nothing changes.
 * The sidebar's CSS comes from the Code Block and uses `.breakdance` selectors with `!important` in places. Start every selector with `body`, for example `body .dwc-sidebar__nav__link`, and check it on the published page.
 * Desktop-only rules start with `body:not(.dwc-mobile)`, mobile-only rules with `body.dwc-mobile`, collapsed-only rules with `body.dwc-collapse-sidebar`.
 * Include the rules below the breakpoint in the same pass.
@@ -186,7 +212,7 @@ Never raise the breakpoint to get the menu button on desktop: set `enableOffCanv
 ### Import, replace, files
 
 * Never replace the header's tree, never delete the header, and never change its template conditions without the user asking.
-* Do not use `breakdance-html-to-page` on the header. It only adds elements, and it would add a second sidebar.
+* Never use `breakdance-html-to-page` to build or rebuild the sidebar itself. It only adds elements. For your own content inside a panel, see "Designed content in a panel".
 
 ***
 
@@ -202,6 +228,8 @@ Never raise the breakpoint to get the menu button on desktop: set `enableOffCanv
 * `urlConfigMap` is read once at page load. `reinitialize()` doesn't apply it.
 * `calcTopPadding` is read by the code but is not in the template's option list. With the top bar the template already pads the first section. For off-canvas on desktop, add `calcTopPadding: 1,` to the options.
 * `calcHeaderHeight` is in the template's options but nothing reads it. Do not use it.
+* `enableTooltips` shows nothing with `hoverToExpandSidebar: 1`: the sidebar expands as the pointer arrives, before a tooltip can show. Ask the user which they want.
+* With `enableCollapsibleSidebar: 1`, desktop runs at 400ms and `--sidebar-transition` and `--sidebar-opacity-transition` apply on mobile only.
 
 ### Attributes
 
@@ -226,7 +254,7 @@ Never raise the breakpoint to get the menu button on desktop: set `enableOffCanv
 
 ### Element names
 
-The template keeps its own spelling: `li -  dropdwon` (typo and double space), `mobile menu overaly`, `Sidebar  <header> v3.0.2`. Match by class first, then by label.
+The template keeps its own spelling: `li -  dropdwon` (typo and double space), `mobile menu overaly`, `Sidebar  <header> v3.1`. Match by class first, then by label.
 
 ### Header
 
@@ -243,10 +271,11 @@ A read-back proves configuration. Only the published page proves rendering. Say 
 
 **1. Fetch the published page** with a unique query string (`?nocache=<timestamp>`). The plain URL can be an old cached copy. The header renders for logged-out visitors on any page its conditions cover. Grep for what you changed: an attribute, a class, a link. Options and variables are not in the HTML: the Code Block's JS is, but its CSS comes from a generated stylesheet. Check those in the browser (step 2).
 
-**2. Use your own headless browser** for position, size, computed style and behavior: `sidebar-test.mjs` in this folder. It needs Node 22+ and Chrome, and launches its own Chrome with a temporary profile. The import path is relative to your script.
+**2. Use your own headless browser** for position, size, computed style and behavior: `sidebar-test.mjs` in this folder. It needs Node 22+ and Chrome, and launches its own Chrome with a temporary profile. Import it by its absolute path.
 
 ```js
-import { open } from '../sidebar-nav-breakdance-skills/sidebar-test.mjs';
+import { pathToFileURL } from 'node:url';
+const { open } = await import(pathToFileURL('<absolute path>/sidebar-test.mjs').href);
 const b = await open({ url: 'https://example.com/?nocache=' + Date.now(), width: 390, height: 844, mobile: true });
 try {
   await b.sleep(2500);
@@ -260,6 +289,9 @@ try {
 * **The sidebar's code is running** when `<body>` has `show-nav`. Wait 2500 ms after load, then check. If it is missing, stop and tell the user (entry file, invariants).
 * **Options:** `DWCSidebarNavigation.activeInstance.config.<option>` in the page is the live value.
 * **Variables:** `getComputedStyle(document.documentElement).getPropertyValue('--name')`.
+* Measure a variable's effect on the element that uses it, not on `:root`: the header and some states set their own values.
+* Helper methods besides those above: `hoverOver(selector)` for hover colors, `css(text)` to try CSS on the page without saving it, `move(x, y)`, `scroll(y)`, and `adminBar: true` in `open()` for the logged-in view. `click()` moves the mouse, which triggers hover-to-expand: for a click with no hover use `fn(() => document.querySelector(sel).click())`.
+* Tooltips: collapse the sidebar, then force `:hover` on the `li` with `cmd('CSS.forcePseudoState', …)`.
 * Check desktop and a width below the breakpoint (`body` has `dwc-mobile`).
 * Open the mobile or off-canvas menu with `tap('.dwc-nav-trigger')`, a slide panel with `click('.dwc-sidebar__nav__btn[data-title="<name>"]')`, collapse with `click('.dwc-toggle-collapse')`. Then `settle()` before measuring. After a collapse, wait 600 ms more for `dwc-is-collapsed`.
 * Current-page behavior runs late: wait 2500 ms after load before you check which panel or dropdown opened.

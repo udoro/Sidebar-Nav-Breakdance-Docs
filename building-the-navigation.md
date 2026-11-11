@@ -29,6 +29,8 @@ The last two names keep the spelling they have in the template, with the extra s
 3. Select the text element inside it and change the text.
 4. To change the icon, select the **link icon** element and pick another icon.
 
+The template's icons come from [Phosphor Icons](https://phosphoricons.com), regular style. Pick icons from the same set if you want them to match.
+
 The sidebar marks the link to the page you're on, so visitors can see where they are. It matches the link's address with the page's address. Use the page's address or its slug, for example `sample-page`.
 
 ***
@@ -76,11 +78,33 @@ Each slide panel has a **Panel header** with two buttons:
 
 Each level can have its own indent, background and icon size. See [Styling](styling.md#dropdown-levels).
 
+### Split dropdowns
+
+By default, the whole dropdown row opens and closes the dropdown. To split it in two:
+
+1. Select the **Sidebar &lt;header&gt;** section.
+2. Open **Advanced > Attributes** and set `data-partition-dropdown` to `true`.
+
+Now the chevron sits in its own box at the end of each dropdown row, and only that box opens the dropdown. Change the box's colors with the [split dropdown variables](styling.md#split-dropdowns).
+
+When the sidebar is collapsed, the whole row opens the dropdown again.
+
+### Make a dropdown label a link
+
+This only works with split dropdowns on. Otherwise the whole row opens the dropdown, and the link can't be clicked.
+
+1. In an **li - link**, duplicate the link element (the one with the class `dwc-sidebar__nav__link`).
+2. Drag the copy into the **dropdown toggle** of your dropdown, as its first item.
+3. In the **dropdown toggle**, delete the old icon and text. Keep the element that holds the chevron.
+4. Set the copy's link, text and icon.
+
 ***
 
 ## Anything else in a panel
 
-Panels are normal Breakdance elements, so you can put other elements in them. The template's slide panel has an image inside its first link, for example.
+Panels are normal Breakdance elements, so you can put other elements in them: cards, images, text, buttons. The template's slide panel has an image inside its first link, for example.
+
+Put your content inside the panel's **inner wrap**, below the title or the list. Keep the panel's **Panel header** and **Panel title wrap** as they are. A long panel scrolls on its own.
 
 ## Panel footer
 

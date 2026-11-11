@@ -87,7 +87,17 @@ Don't change the rules under `:root`. They are part of the template. To style so
 | `--sidebar-list-items-block-padding` | `1.25rem` | Space above and below a menu list. |
 | `--sidebar-list-gap` | `0` | Space between the items of a menu list. It also spaces the buttons in a Panel header and the social links. |
 | `--sidebar-chevron-size` | `1rem` | Size of the chevron arrow on slide buttons and dropdowns. |
-| `--sidebar-chevron-color` | `#62588f` | Color of the chevron arrow. |
+| `--sidebar-chevron-color` | `#62588f` | Color of the chevron arrow on slide buttons. Dropdown chevrons take the level icon colors instead (see Dropdown levels). |
+
+## Split dropdowns
+
+| Variable | Template value | What it sets |
+| --- | --- | --- |
+| `--sidebar-dropdown-button-bg` | `white` | Background of the chevron box. Only with the `data-partition-dropdown` attribute set to `true`, like the four below. |
+| `--sidebar-dropdown-button-hover-bg` | `black` | Background of the chevron box on hover. |
+| `--sidebar-dropdown-button-active-bg` | `black` | Background of the chevron box while its dropdown is open. |
+| `--sidebar-dropdown-chevron-hover-color` | `white` | Color of the chevron on hover. |
+| `--sidebar-dropdown-chevron-active-color` | `white` | Color of the chevron while its dropdown is open. |
 
 ## Panels and Back button
 
@@ -123,7 +133,7 @@ Don't change the rules under `:root`. They are part of the template. To style so
 | --- | --- | --- |
 | `--sidebar-collapse-width` | `80px` | Width of the collapsed sidebar. It only applies when `collapseAutoWidth` is `0`. |
 | `--sidebar-tooltip-font-size` | `10px` | Font size of a tooltip. |
-| `--sidebar-tooltip-font-color` | `white` | Not used in 3.0.3. Changing it does nothing. Tooltip text is always white. |
+| `--sidebar-tooltip-font-color` | `white` | Color of the text in a tooltip. |
 | `--sidebar-tooltip-bg` | `black` | Background of a tooltip. |
 | `--sidebar-tooltip-radius` | `0.5em` | Rounded corners of a tooltip. |
 | `--sidebar-tooltip-inline-padding` | `1em` | Space left and right inside a tooltip. |
@@ -150,7 +160,7 @@ Don't change the rules under `:root`. They are part of the template. To style so
 
 | Variable | Template value | What it sets |
 | --- | --- | --- |
-| `--sidebar-transition` | `500ms` | How long panels slide and the sidebar opens. |
+| `--sidebar-transition` | `500ms` | How long panels slide and the sidebar opens. With the collapsible sidebar on, desktop uses 400ms and this value applies on mobile only. |
 | `--sidebar-ttf` | `cubic-bezier(1, 0, 0.25, 1)` | The easing curve of that motion. |
 | `--sidebar-collapse-ttf` | `cubic-bezier(0.1, 0.55, 0.35, 1)` | The easing curve of the collapse and expand motion. |
 | `--sidebar-opacity-transition` | `500ms 200ms` | Duration and delay of the fade when text hides or shows. |
@@ -169,9 +179,9 @@ Don't change the rules under `:root`. They are part of the template. To style so
 | --- | --- | --- |
 | `--lvl-1-toggle-bg-active` | `var(--sidebar-link-hover-bg)` | Background of a level 1 dropdown button while it is open. |
 | `--lvl-1-content-bg` | `var(--sidebar-dropdown-content-bg)` | Background of a level 1 dropdown list. |
-| `--lvl-1-toggle-color-active` | `var(--sidebar-link-color)` | Not used in 3.0.3. Changing it does nothing. |
+| `--lvl-1-toggle-color-active` | `var(--sidebar-link-color)` | Text color of a level 1 dropdown button while it is open. |
 | `--lvl-1-icon-color` | `var(--sidebar-link-icon-color)` | Icon color at level 1. |
-| `--lvl-1-icon-hover-color` | `var(--sidebar-link-icon-hover-color)` | Not used in 3.0.3. Changing it does nothing. |
+| `--lvl-1-icon-hover-color` | `var(--sidebar-link-icon-hover-color)` | Icon color at level 1 on hover. |
 | `--lvl-2-toggle-bg-active` | `var(--sidebar-link-hover-bg)` | Background of a level 2 dropdown button while it is open. |
 | `--lvl-2-content-bg` | `var(--sidebar-dropdown-content-bg)` | Background of a level 2 dropdown list. |
 | `--lvl-2-toggle-color-active` | `var(--sidebar-link-color)` | Text color of a level 2 dropdown button while it is open. |

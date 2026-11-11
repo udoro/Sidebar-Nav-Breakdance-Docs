@@ -21,7 +21,7 @@ Entry point for configuring Sidebar Navigation Builder for **Breakdance** throug
 The Breakdance tools are named `breakdance-<action>` (for example `breakdance-get-post-tree`). Your client may prefix them with the server name. If your client defers MCP tools, load them by name first.
 
 * **No `breakdance-*` tools:** stop. Tell the user: "I can't reach your Breakdance site. Follow the AI Connector setup, then start a new session." Do not try REST calls, PHP or a browser instead.
-* **Before your first read or write in a session,** call `breakdance-get-instructions`. The server requires it before any build or edit tool.
+* **Before your first read or write in a session,** call `breakdance-get-instructions`. The server requires it before any build or edit tool. Its output is long and is saved to a file. You don't need Breakdance's `building-sites` or other skills for this product's menu items, options or variables: these files replace them.
 * **A tool refuses a call:** name the error to the user, give them the builder steps for that change, and carry on with the rest. Never route around a refusal.
 
 If your client also has Breakdance's own skills (`breakdance-get-skill`), load the matching one for generic Breakdance work such as templates or dynamic data. This file covers what is specific to Sidebar Navigation Builder.
@@ -30,7 +30,7 @@ If your client also has Breakdance's own skills (`breakdance-get-skill`), load t
 
 ## Which path are you on
 
-**Correction path:** you are changing something that already exists: a JS option, a CSS variable, an attribute, a menu item's text, link or icon.
+**Correction path:** you are changing things that already exist, one or many: JS options, CSS variables, attributes, a menu item's text, link or icon. For more than one value, also read build file section 4. If a value can't do it, read "Your own CSS" in section 5. Verify as section 7 says.
 
 **Build path:** you are creating structure: new menu items, panels or dropdowns, or a rebuild.
 
@@ -54,6 +54,7 @@ Then find the header (below), change the one value, verify, stop.
 
 * **You edit one element: the Code Block labelled `Sidebar Nav Codes`** (the element whose `javascript_code` contains `const DWCSidebarConfig`). Options are at the top of its `javascript_code`, variables are at the top of its `css_code`. Everything below `urlConfigMap` in the JS, and everything below the `:root` blocks in the CSS, is product code: never change it, except the documented breakpoint change. To change behaviour beyond options and variables, add your own CSS outside the Code Block.
 * **Change one value with a targeted replace.** Replace the exact text of that one line, with its indent and line break, confirm it occurs once, and write the whole field back. The commented `urlConfigMap` example repeats option lines such as `enableCollapsibleSidebar: 0,`. Never rewrite or reformat the rest of the field.
+* **Write a code field so it arrives exactly.** Build the new field with `node` from the field you saved: replace the lines, then `JSON.stringify` it for the call. Make every change to one field in one write. Compare the read-back with your file byte for byte. If you can't send the field exactly, set the variable in your own Code Block instead (`body #dwc_header { --name: value; }`, see "Your own CSS" in the build file) and say so.
 * **Options are `1` or `0`**, except `reinitOnUrlChange` (`true`/`false`) and the breakpoints (`window.matchMedia("(max-width: Npx)")`).
 * **`offcanvas` and `topbar` are attributes on the root section and follow their options.** `enableOffCanvas: 1` needs `offcanvas` `"1"`. `enableTopBar: 1` needs `topbar` `"1"`. Set both together in one pass. Back to `0`, the same.
 * **Attribute lists are written whole.** Send the full `settings.advanced.attributes` list with every row, changing only the `value` you mean to.
@@ -66,12 +67,12 @@ Then find the header (below), change the one value, verify, stop.
 ### Find the header
 
 1. `breakdance-search-posts` with `post_type` `breakdance_header`. More than one: continue with all of them.
-2. Read each candidate's tree with `breakdance-get-post-tree` and save it to a file. The Sidebar Navigation Builder header has a root `Section` with id `dwc_header` and the classes `dwc-sidebar` and `dwc-offcanvas-header`, and a Code Block whose `javascript_code` contains `const DWCSidebarConfig`.
+2. Read each candidate's tree with `breakdance-get-post-tree` and save it to a file. The Sidebar Navigation Builder header has a root `Section` with id `dwc_header` and the classes `dwc-sidebar` and `dwc-offcanvas-header`, and a Code Block whose `javascript_code` contains `const DWCSidebarConfig`. Identify the Code Block by that text, not by its position: a header can have more Code Blocks.
 3. More than one match: ask the user which, by template title. None: see the build file, section 2.
 
 Record the post ID and the IDs of the root section, the Code Block, the header inner wrap, Nav and the Home panel.
 
-The root label carries a version, for example `Sidebar <header> v3.0.2`. The label can be older than the code. The reference describes 3.0.3. For any other version, compare the live option names and attributes with the reference. Where they differ, the live code is authoritative and the reference is not.
+Compare the live option names with reference section 3. The post title and the root label are not proof of the version. Where the live code and the reference differ, the live code is authoritative.
 
 ### When the page disagrees with the builder
 
@@ -89,7 +90,7 @@ Read `sidebar-nav-breakdance-skills-build.md` in full, then follow its workflow 
 
 ## Agent Skills Update
 
-Where you record a finding depends on the session. Decide before writing anything. A session is a **developer** session when `SIDEBAR NAV BREAKDANCE/sidebar-nav-dev-context.md` is found by searching upward from this file's folder, and a **user** session otherwise.
+Where you record a finding depends on the session. Decide before writing anything. A session is a **developer** session when `BREAKDANCE/SIDEBAR NAV BREAKDANCE/sidebar-nav-dev-context.md` is found by searching upward from this file's folder, and a **user** session otherwise.
 
 | Session | Record findings in | Never edit |
 | --- | --- | --- |

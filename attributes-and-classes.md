@@ -17,6 +17,7 @@ These attributes are on the **Sidebar &lt;header&gt;** section, the top element 
 | `data-disable-animation` | empty | Set it to `1` to turn off every slide and fade in the sidebar. |
 | `data-disable-motion-on-load` | empty | Set it to `1` to turn off the sidebar's motion while the page loads. The template removes this attribute 300 ms after the page loads. |
 | `data-collapse` | empty | Set it to `1` to hold the sidebar at its collapsed width while the page loads. The template removes this attribute 300 ms after the page loads. |
+| `data-partition-dropdown` | empty | Set it to `true` to split each dropdown row in two: the label, and the chevron in its own box. Only the box opens the dropdown, so the label can be a link. See [Split dropdowns](building-the-navigation.md#split-dropdowns). |
 
 {% hint style="warning" %}
 **Keep `offcanvas` and `topbar` in step with their options.** If `offcanvas` is `1` and `enableOffCanvas` is `0`, the sidebar breaks: it hides off the screen and the bar stretches across the top. Logged-in users also see a red message on the page that tells them to set `offcanvas` back to `0`.

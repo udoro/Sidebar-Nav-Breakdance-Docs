@@ -105,7 +105,7 @@ To make the collapsible sidebar cover the page instead of pushing it, see the `d
 | `offCanvasBreakpoint` | `window.matchMedia("(max-width:10024px)")` | With `enableOffCanvas` on, off-canvas works at this width and below. The template value covers every screen. |
 
 {% hint style="info" %}
-The template also lists `calcHeaderHeight`. It doesn't change anything in 3.0.3. Leave it as it is.
+The template also lists `calcHeaderHeight`. It doesn't change anything. Leave it as it is.
 {% endhint %}
 
 ***

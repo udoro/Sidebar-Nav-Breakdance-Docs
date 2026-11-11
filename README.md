@@ -6,7 +6,7 @@ icon: pen-to-square
 
 **Sidebar Navigation Builder for Breakdance** is a header template for Breakdance. It gives you a sidebar menu with sliding panels, dropdowns you can nest, a collapsible mode, an off-canvas mode, a top bar and a mobile menu.
 
-This documentation covers version **3.0.3**.
+This documentation covers version **3.1**.
 
 ***
 

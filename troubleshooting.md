@@ -16,7 +16,6 @@ icon: wrench
 | The top bar doesn't hide on scroll | Headroom needs `enableOffCanvas` or `enableTopBar` set to `1`, and doesn't work with `offCanvasPushContent`. See [Headroom and scrolling](sidebar-options.md#headroom-and-scrolling). |
 | There's no collapse button | Set `enableCollapsibleSidebar` to `1`. The collapsible sidebar works on desktop only, and not when `enableOffCanvas` is `1`. |
 | Icons are cut off when collapsed | The collapsed width doesn't fit your icons. See [Collapsed width](styling.md#collapsed-width). |
-| A tooltip has the wrong text color | The tooltip text is always white in 3.0.3. `--sidebar-tooltip-font-color` doesn't change it. Change `--sidebar-tooltip-bg` to keep the text easy to read. |
 | The sidebar stops working after a page transition | See [Page Transitions & JavaScript](guides/javascript-api.md). |
 | `sidebar` or `DWCSidebarConfig` is not defined in my own code | They are not available to other scripts. See [Page Transitions & JavaScript](guides/javascript-api.md). |
 
