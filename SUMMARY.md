@@ -12,3 +12,7 @@
 ## Guides
 
 * [Page Transitions & JavaScript](guides/javascript-api.md)
+
+## AI Connector
+
+* [AI Connector](ai-connector/README.md)
