@@ -6,7 +6,7 @@ icon: clock-rotate-left
 
 You'll find every version's template in your Gumroad library.
 
-## 3.1
+## 3.1 - November 12, 2026
 
 ### New
 
